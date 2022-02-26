@@ -1,5 +1,10 @@
 package mx.uam.Capstone.models;
 
+import javax.persistence.*;
+
+
+@Entity
+@Table(name = "usuarios")
 public class Usuario {
 
     private int id_usuario;
@@ -8,14 +13,25 @@ public class Usuario {
     private String password;
     private String rol;
 
+    public Usuario() {
+    }
+
+    public Usuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    @Id
+    //https://stackoverflow.com/questions/39807483/sequence-hibernate-sequence-not-found-sql-statement
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId_usuario() {
         return id_usuario;
     }
-
     public void setId_usuario(int id_usuario) {
         this.id_usuario = id_usuario;
     }
 
+
+    @Column(name = "NombreUsuario", nullable = false)
     public String getNombreUsuario() {
         return nombreUsuario;
     }
@@ -24,6 +40,8 @@ public class Usuario {
         this.nombreUsuario = nombreUsuario;
     }
 
+
+    @Column(name = "Email", nullable = false)
     public String getEmail() {
         return email;
     }
@@ -32,6 +50,7 @@ public class Usuario {
         this.email = email;
     }
 
+    @Column(name = "Password", nullable = false)
     public String getPassword() {
         return password;
     }
@@ -40,6 +59,7 @@ public class Usuario {
         this.password = password;
     }
 
+    @Column(name = "Rol", nullable = false)
     public String getRol() {
         return rol;
     }
