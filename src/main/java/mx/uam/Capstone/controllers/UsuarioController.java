@@ -7,29 +7,44 @@ import mx.uam.Capstone.models.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 //@RequestMapping("/appWEB/")
-@RestController
+@Controller
 public class UsuarioController {
 
     @Autowired private UsuarioService usuarioService;
 
-    // Create o Save operation
-    @PostMapping("/aber")
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET, headers = "Accept=application/json")
+    public String getPerson(Model model) {
+        List<Usuario> listOfPersons = usuarioService.fetchUsuarioList();
+        model.addAttribute("person", new Usuario());
+        model.addAttribute("listOfPersons", listOfPersons);
+        return "PersonDetails";
+    }
+
+
+    @PostMapping()
     public Usuario saveUsuario(@Valid @RequestBody Usuario usuario) {
         usuario.setNombreUsuario("Probando guardar esto en la BD");
-        return usuarioService.saveUsuario(usuario);
+        BDController bd = new BDController();
+        Usuario usuario1 = new Usuario("amaury1111");
+        bd.registraUsuario(usuario1);
+
+        return usuarioService.saveUsuario(usuario1);
     }
 
     // Read operation
-    @GetMapping("/aber1")
+    @GetMapping("/aber")
     public List<Usuario> fetchUsuarioList()
     {
         return usuarioService.fetchUsuarioList();
