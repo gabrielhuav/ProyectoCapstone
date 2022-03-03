@@ -1,5 +1,7 @@
 package mx.uam.Capstone;
 
+import mx.uam.Capstone.controllers.BDController;
+import mx.uam.Capstone.models.Usuario;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
